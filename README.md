@@ -23,7 +23,7 @@ function SomeOtherComponent (props) {
 ____
 
 ## Props
-- `entry {function}`
+- `entry {function} {default: () => document.getElementById('portals')}`
   - a function which returns the DOM element you'd like to portal into
     ```js
     const getPortal = () => document.getElementById('portal')
