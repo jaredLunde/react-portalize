@@ -17,12 +17,16 @@ export default class Portalize extends React.Component {
 
   static defaultProps = {
     entry: function () {
+      if (typeof document === 'undefined') {
+        return null
+      }
+      
       return document.getElementById('portals')
     }
   }
 
   componentDidMount () {
-    if (this.props.entry() === null) {
+    if (typeof document !== 'undefined' && this.props.entry() === null) {
       this.forceUpdate()
     }
   }
