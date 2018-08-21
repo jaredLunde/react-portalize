@@ -17,10 +17,6 @@ export default class Portalize extends React.Component {
 
   static defaultProps = {
     entry: function () {
-      if (typeof document === 'undefined') {
-        return null
-      }
-      
       return document.getElementById('portals')
     }
   }
@@ -32,12 +28,12 @@ export default class Portalize extends React.Component {
   }
 
   render () {
-    const {children, entry} = this.props
+    const element = typeof document !== 'undefined' && this.props.entry()
 
-    if (entry() === null) {
-      return null
-    }
-
-    return ReactDOM.createPortal(children, entry())
+    return element === false || element === null ? (
+      null
+    ) :(
+      ReactDOM.createPortal(this.props.children, element)
+    )
   }
 }
