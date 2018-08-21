@@ -21,19 +21,21 @@ export default class Portalize extends React.Component {
     }
   }
 
+  element = null
+
   componentDidMount () {
-    if (typeof document !== 'undefined' && this.props.entry() === null) {
+    if (typeof document !== 'undefined' && this.element === null) {
       this.forceUpdate()
     }
   }
 
   render () {
-    const element = typeof document !== 'undefined' && this.props.entry()
+    this.element = typeof document !== 'undefined' && this.props.entry()
 
-    return element === false || element === null ? (
+    return this.element === false || this.element === null ? (
       null
     ) :(
-      ReactDOM.createPortal(this.props.children, element)
+      ReactDOM.createPortal(this.props.children, this.element)
     )
   }
 }
