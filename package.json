@@ -10,7 +10,7 @@
     "build:cjs": "rimraf cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir cjs",
     "build-pub": "yarn run build && yarn publish",
     "edit": "atom ./",
-    "watch:es": "cross-env NODE_ENV=development cross-env BABEL_ENV=es babel ./src -w --out-dir es"
+    "watch:es": "cross-env NODE_ENV=development BABEL_ENV=es babel ./src -w --out-dir es"
   },
   "author": "Jared Lunde <jared@tessellate.io> (https://github.com/jaredlunde)",
   "sideEffects": false,
