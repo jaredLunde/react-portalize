@@ -32,19 +32,48 @@ import Portalize from 'react-portalize'
 </Portalize>
 ```
 
-## Example
+## Examples
 **[Hello world](examples/hello-world)**
+**[Hello world w/ Context](examples/hello-world-context)**
 
 ____
 
 ## react-portalize
-### `<Portalize container={string} children={React.Component}>`
-- `container {string}`
+```js
+<Portalize
+  container={string}
+  children={React.Component}
+  providers={Array}
+  skipSSR={boolean}
+/>
+```
+- `container <string>`
   - The DOM selector you'd like to render your children into
   - **default** `#portals`
 
-- `children {React.Component}`
+- `children <React.Component>`
   - Anything React can render
+
+- `server <boolean>`
+  - If you want to skip rendering this component on the server side you can do
+    so with the `server={false}` flag
+    - **default** `true`
+
+- `providers <Array[Object<{provider, value}>]>`
+  - Critically, this component will not work with portals that utilize context
+    out of the box. This is because the children are never rendered into the
+    virtual DOM tree on the server side. This hacky approach fixes that problem
+    by creating your portals with `<Provider value={}/>` components wrapped
+    around them. The providers supplied in the array are reduced from the
+    right, so `[a, b, c]` renders as `<a><b><c/></b></a>`. You can check out
+    an example **[here](examples/hello-world-context)**.
+    ```js
+    <Portalize providers={[{provider: YourProvider, value: YourProviderValue}]}>
+      <YourConsumer>
+        {value => JSON.stringify(value)}
+      </YourConsumer>
+    </Portalize>
+    ```
 
 ## react-portalize/server
 ### `renderPortalsToString(html <string>)`

@@ -12,11 +12,19 @@ export const PORTALS = {}
 
 export default class Portalize extends React.Component {
   static propTypes = {
-    container: PropTypes.string.isRequired
+    container: PropTypes.string.isRequired,
+    providers: PropTypes.arrayOf(
+      PropTypes.shape({
+        provider: PropTypes.object,
+        value: PropTypes.any
+      })
+    ),
+    server: PropTypes.bool.isRequired
   }
 
   static defaultProps = {
-    container: '#portals'
+    container: '#portals',
+    server: true
   }
 
   nodes = null
@@ -26,7 +34,21 @@ export default class Portalize extends React.Component {
       typeof document !== 'undefined' && document.querySelectorAll(this.props.container)
 
     if (this.nodes === false) {
-      PORTALS[this.props.container] = this.props.children
+      let {children, server, providers} = this.props
+
+      if (server === false) {
+        return null
+      }
+
+      if (providers !== void 0 && providers.length > 0) {
+        children = providers.reduceRight(
+          (children, {provider, value}) =>
+            React.createElement(provider, {children, value}),
+          children
+        )
+      }
+
+      PORTALS[this.props.container] = children
       return null
     }
     else if (this.nodes.length === 0) {
