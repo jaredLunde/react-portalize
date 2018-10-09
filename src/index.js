@@ -1,1 +1,1 @@
-export default from './Portalize'
+export default, {PORTALS} from './Portalize'

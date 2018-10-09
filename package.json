@@ -1,16 +1,16 @@
 {
-  "version": "0.1.9",
-  "main": "cjs/index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
-  "esnext": "es/index.js",
+  "version": "1.0.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "jsnext:main": "dist/es/index.js",
+  "esnext": "dist/es/index.js",
   "scripts": {
-    "build": "yarn run build:es && yarn run build:cjs",
-    "build:es": "rimraf es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir es",
-    "build:cjs": "rimraf cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir cjs",
-    "build-pub": "yarn run build && yarn publish",
-    "edit": "atom ./",
-    "watch:es": "cross-env NODE_ENV=development BABEL_ENV=es babel ./src -w --out-dir es"
+    "build": "yarn run build:es && yarn run build:cjs && yarn run build:server",
+    "build:es": "rimraf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es",
+    "build:cjs": "rimraf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs",
+    "build:server": "rimraf server && cross-env NODE_ENV=production BABEL_ENV=node-cjs babel server-src --out-dir server",
+    "watch": "rimraf dist/es && rimraf server && cross-env NODE_ENV=production BABEL_ENV=es babel src -w --out-dir dist/es & cross-env NODE_ENV=production BABEL_ENV=es babel server-src -w --out-dir server",
+    "edit": "atom ./"
   },
   "author": "Jared Lunde <jared@tessellate.io> (https://github.com/jaredlunde)",
   "sideEffects": false,
@@ -19,7 +19,10 @@
   "repository": "https://github.com/jaredlunde/react-portalize",
   "keywords": [
     "react",
-    "portal"
+    "portal",
+    "ssr",
+    "server side render",
+    "react-dom"
   ],
   "name": "react-portalize",
   "devDependencies": {

@@ -4,38 +4,42 @@ import PropTypes from 'prop-types'
 
 
 /**
-<Portalize entry={() => document.getElementById('root')}>
+<Portalize container='#portals'>
   <div>Inject me</div>
 </Portalize>
 */
-
+export const PORTALS = {}
 
 export default class Portalize extends React.Component {
   static propTypes = {
-    entry: PropTypes.func.isRequired
+    container: PropTypes.string.isRequired
   }
 
   static defaultProps = {
-    entry: function () {
-      return document.getElementById('portals')
-    }
+    container: '#portals'
   }
 
-  element = null
-
-  componentDidMount () {
-    if (typeof document !== 'undefined' && this.element === null) {
-      this.forceUpdate()
-    }
-  }
+  nodes = null
 
   render () {
-    this.element = typeof document !== 'undefined' && this.props.entry()
+    this.nodes =
+      typeof document !== 'undefined' && document.querySelectorAll(this.props.container)
 
-    return this.element === false || this.element === null ? (
-      null
-    ) :(
-      ReactDOM.createPortal(this.props.children, this.element)
-    )
+    if (this.nodes === false) {
+      PORTALS[this.props.container] = this.props.children
+      return null
+    }
+    else if (this.nodes.length === 0) {
+      return null
+    }
+    else {
+      const portals = []
+
+      for (let i = 0; i < this.nodes.length; i++) {
+        portals.push(ReactDOM.createPortal(this.props.children, this.nodes[i]))
+      }
+
+      return portals
+    }
   }
 }
