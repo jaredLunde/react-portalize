@@ -15,7 +15,7 @@ export default class Portalize extends React.Component {
     container: PropTypes.string.isRequired,
     providers: PropTypes.arrayOf(
       PropTypes.shape({
-        provider: PropTypes.object,
+        provider: PropTypes.any,
         value: PropTypes.any
       })
     ),

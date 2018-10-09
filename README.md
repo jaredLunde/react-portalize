@@ -57,7 +57,7 @@ ____
 - `server <boolean>`
   - If you want to skip rendering this component on the server side you can do
     so with the `server={false}` flag
-    - **default** `true`
+  - **default** `true`
 
 - `providers <Array[Object<{provider, value}>]>`
   - Critically, this component will not work with portals that utilize context

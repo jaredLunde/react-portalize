@@ -15,7 +15,7 @@ export function renderPortalsToString (html) {
     doc(selector).html(renderToStaticMarkup(PORTALS[selector]))
   }
 
-  return (
+  return String(
     html.match(/^\s*(<!|<html|<body|<head)/)
       ? doc.html()
       : doc('body').contents()
