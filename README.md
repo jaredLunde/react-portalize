@@ -56,7 +56,8 @@ ____
 
 - `server <boolean>`
   - If you want to skip rendering this component on the server side you can do
-    so with the `server={false}` flag
+    so with the `server={false}` flag. You don't need to worry about turning this 
+    off if you aren't rendering on the server with `renderPortalsToString`
   - **default** `true`
 
 - `providers <Array[Object<{provider, value}>]>`
