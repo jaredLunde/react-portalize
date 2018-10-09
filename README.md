@@ -33,7 +33,7 @@ import Portalize from 'react-portalize'
 ```
 
 ## Examples
-**[Hello world](examples/hello-world)**
+**[Hello world](examples/hello-world)**<br/>
 **[Hello world w/ Context](examples/hello-world-context)**
 
 ____
