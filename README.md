@@ -44,7 +44,7 @@ ____
   container={string}
   children={React.Component}
   providers={Array}
-  skipSSR={boolean}
+  server={boolean}
 />
 ```
 - `container <string>`
