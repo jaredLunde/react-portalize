@@ -1,5 +1,5 @@
 {
-  "version": "1.0.5",
+  "version": "1.0.7",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "jsnext:main": "dist/es/index.js",
@@ -9,7 +9,8 @@
     "build:es": "rimraf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es",
     "build:cjs": "rimraf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs",
     "build:server": "rimraf server && cross-env NODE_ENV=production BABEL_ENV=node-cjs babel server-src --out-dir server",
-    "watch": "rimraf dist/es && rimraf server && cross-env NODE_ENV=production BABEL_ENV=es babel src -w --out-dir dist/es & cross-env NODE_ENV=production BABEL_ENV=es babel server-src -w --out-dir server"
+    "watch": "rimraf dist/es && rimraf server && cross-env NODE_ENV=production BABEL_ENV=es babel src -w --out-dir dist/es & cross-env NODE_ENV=production BABEL_ENV=es babel server-src -w --out-dir server",
+    "prepublishOnly": "yarn build"
   },
   "author": "Jared Lunde <jared@BeStellar.co> (https://github.com/jaredLunde)",
   "sideEffects": false,
@@ -25,14 +26,13 @@
   ],
   "name": "react-portalize",
   "devDependencies": {
-    "@stellar-apps/babel-preset-es": "^1.0.1",
-    "@stellar-apps/babel-preset-react": "^1.0.0",
+    "@stellar-apps/babel-preset-es": "^1.0.4",
+    "@stellar-apps/babel-preset-react": "^1.0.1",
     "cross-env": "^5.2.0",
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.1",
-    "@babel/runtime-corejs2": "^7.3.1",
+    "@babel/runtime": "^7.4.0",
     "cheerio": "^1.0.0-rc.2"
   },
   "peerDependencies": {
