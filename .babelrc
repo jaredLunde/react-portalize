@@ -12,7 +12,8 @@
             "env": {
               "useBuiltIns": false,
               "targets": {"chrome": "41", "ie": "11"}
-            }
+            },
+            "runtime": false
           }
         ]
       ]
@@ -25,7 +26,8 @@
             "env": {
               "useBuiltIns": false,
               "targets": {"node": "8"}
-            }
+            },
+            "runtime": false
           }
         ]
       ]
@@ -40,7 +42,7 @@
               "modules": false,
               "targets": {"browsers": ">5% in US"}
             },
-            "runtime": {"useESModules": true}
+            "runtime": false
           }
         ]
       ]
