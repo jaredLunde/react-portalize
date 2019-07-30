@@ -43,14 +43,14 @@ if (__DEV__) {
   const PropTypes = require('prop-types')
 
   Portalize.propTypes = {
-    container: PropTypes.string.isRequired,
+    container: PropTypes.string,
     providers: PropTypes.arrayOf(
       PropTypes.shape({
         provider: PropTypes.any,
         value: PropTypes.any
       })
     ),
-    server: PropTypes.bool.isRequired
+    server: PropTypes.bool
   }
 }
 
