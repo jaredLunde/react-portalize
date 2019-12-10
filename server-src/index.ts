@@ -1,12 +1,12 @@
 import {renderToStaticMarkup} from 'react-dom/server'
-import {load}  from 'cheerio'
+import {load} from 'cheerio'
+// @ts-ignore
 import {PORTALS} from 'react-portalize'
 
-
-export function renderPortalsToString (html) {
+export function renderPortalsToString(html: string): string {
   const selectors = Object.keys(PORTALS)
 
-  if (selectors.length === 0) return html;
+  if (selectors.length === 0) return html
 
   const doc = load(html)
 

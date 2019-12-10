@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Portalize> should not render on server if server={false} 1`] = `"<body data-reactroot=\\"\\"><div id=\\"portals\\"></div></body>"`;
+
+exports[`<Portalize> should store portals in the PORTALS constant according to their container 1`] = `"<body data-reactroot=\\"\\"><div id=\\"portals\\"></div></body>"`;
+
+exports[`<Portalize> should work with context 1`] = `"bar"`;
+
+exports[`<Portalize> should work with context 2`] = `"<body data-reactroot=\\"\\"><div id=\\"portals\\"></div></body>"`;

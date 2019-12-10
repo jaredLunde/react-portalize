@@ -1,42 +1,88 @@
 {
-  "version": "2.0.1",
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
-  "jsnext:main": "dist/es/index.js",
-  "esnext": "dist/es/index.js",
-  "scripts": {
-    "build": "yarn run build:es && yarn run build:cjs && yarn run build:server",
-    "build:es": "rimraf dist/es && cross-env NODE_ENV=production BABEL_ENV=es babel src --out-dir dist/es",
-    "build:cjs": "rimraf dist/cjs && cross-env NODE_ENV=production BABEL_ENV=cjs babel src --out-dir dist/cjs",
-    "build:server": "rimraf server && cross-env NODE_ENV=production BABEL_ENV=node-cjs babel server-src --out-dir server",
-    "watch": "rimraf dist/es && rimraf server && cross-env NODE_ENV=production BABEL_ENV=es babel src -w --out-dir dist/es & cross-env NODE_ENV=production BABEL_ENV=es babel server-src -w --out-dir server",
-    "prepublishOnly": "yarn build"
-  },
-  "author": "Jared Lunde <jared@BeStellar.co> (https://github.com/jaredLunde)",
-  "sideEffects": false,
-  "analyze": true,
+  "name": "react-portalize",
+  "version": "2.0.2",
+  "homepage": "https://github.com/jaredLunde/react-portalize#readme",
+  "repository": "github:jaredLunde/react-portalize",
+  "bugs": "https://github.com/jaredLunde/react-portalize/issues",
+  "author": "Jared Lunde <jared.lunde@gmail.com> (https://jaredLunde.com)",
   "license": "MIT",
-  "repository": "https://github.com/jaredLunde/react-portalize",
+  "description": "",
   "keywords": [
     "react",
+    "react component",
+    "react portalize",
     "portal",
-    "ssr",
-    "server side render",
-    "react-dom"
+    "portal component",
+    "portalize"
   ],
-  "name": "react-portalize",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "files": [
+    "/dist",
+    "/server"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:es && npm run build:server && npm run build:types",
+    "build:cjs": "babel src -d dist/cjs -x .ts,.tsx --ignore \"**/*.test.ts\",\"**/test.ts\",\"**/*.test.tsx\",\"**/test.tsx\" --delete-dir-on-start",
+    "build:server": "babel server-src -d server -x .ts,.tsx --ignore \"**/*.test.ts\",\"**/test.ts\",\"**/*.test.tsx\",\"**/test.tsx\" --delete-dir-on-start",
+    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es -x .ts,.tsx --ignore \"**/*.test.ts\",\"**/test.ts\",\"**/*.test.tsx\",\"**/test.tsx\" --delete-dir-on-start",
+    "build:types": "tsc -p tsconfig.json -d --outDir dist/es --emitDeclarationOnly && mkdir -p dist/cjs && cp -R dist/es/**.d.ts dist/cjs && tsc -p tsconfig.server.json -d --outDir server --emitDeclarationOnly && rimraf dist/**/*.test.d.ts",
+    "check-types": "tsc --noEmit -p tsconfig.json",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,yml,json,babelrc,eslintrc,prettierrc}\"",
+    "lint": "eslint . --ext .ts,.tsx",
+    "prepublishOnly": "npm run lint && npm run test && npm run build && npm run format",
+    "test": "jest",
+    "validate": "npm run check-types && npm run lint && npm run test -- --coverage"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run build:types"
+    }
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx}": [
+      "eslint",
+      "prettier --write"
+    ],
+    "**/*.{md,yml,json,babelrc,eslintrc,prettierrc}": [
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
-    "@stellar-apps/babel-preset-es": "^1.0.4",
-    "@stellar-apps/babel-preset-react": "^1.0.1",
-    "cross-env": "^5.2.0",
-    "rimraf": "^2.6.2"
+    "@babel/preset-react": "latest",
+    "@lunde/babel-preset-es": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/react-hooks": "latest",
+    "@types/jest": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "cross-env": "latest",
+    "eslint": "latest",
+    "eslint-import-resolver-jest": "latest",
+    "eslint-plugin-jest": "latest",
+    "eslint-plugin-react": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "husky": "latest",
+    "jest": "latest",
+    "lint-staged": "latest",
+    "prettier": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-test-renderer": "latest",
+    "rimraf": "^2.6.3",
+    "ts-jest": "latest",
+    "typescript": "latest"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3"
   },
   "peerDependencies": {
-    "prop-types": ">= 15.6.0",
-    "react": ">= 16.8.0",
-    "react-dom": ">= 16.8.0"
+    "prop-types": ">=15.7.2",
+    "react": ">=16.8",
+    "react-dom": ">=16"
   }
 }

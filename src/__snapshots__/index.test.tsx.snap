@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Portalize> should not render into a non-existent selector 1`] = `
+<body>
+  <div
+    class="blah"
+  />
+  <div />
+</body>
+`;
+
+exports[`<Portalize> should render into #portals by default 1`] = `
+<body>
+  <div
+    id="portals"
+  >
+    <div>
+      Hello world
+    </div>
+  </div>
+  <div />
+</body>
+`;
+
+exports[`<Portalize> should render into a portal by custom selector 1`] = `
+<body>
+  <div
+    class="portals"
+  >
+    <div>
+      Hello world
+    </div>
+  </div>
+  <div />
+</body>
+`;
