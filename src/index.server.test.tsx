@@ -43,7 +43,6 @@ describe('<Portalize>', () => {
     )
 
     expect(Object.values(PORTALS).length).toBe(1)
-    console.log(PORTALS['.portals'].props.children)
     expect(renderToStaticMarkup(PORTALS['.portals'])).toMatchSnapshot()
     expect(result).toMatchSnapshot()
     delete PORTALS['.portals']
