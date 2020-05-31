@@ -2,6 +2,8 @@
 
 exports[`<Portalize> should not render on server if server={false} 1`] = `"<body data-reactroot=\\"\\"><div id=\\"portals\\"></div></body>"`;
 
+exports[`<Portalize> should not render portals to a string 1`] = `"<body data-reactroot=\\"\\"><div id=\\"portals\\"></div></body>"`;
+
 exports[`<Portalize> should store portals in the PORTALS constant according to their container 1`] = `"<body data-reactroot=\\"\\"><div id=\\"portals\\"></div></body>"`;
 
 exports[`<Portalize> should work with context 1`] = `"bar"`;

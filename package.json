@@ -1,6 +1,6 @@
 {
   "name": "react-portalize",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "homepage": "https://github.com/jaredLunde/react-portalize#readme",
   "repository": "github:jaredLunde/react-portalize",
   "bugs": "https://github.com/jaredLunde/react-portalize/issues",
@@ -13,23 +13,51 @@
     "react portalize",
     "portal",
     "portal component",
-    "portalize"
+    "portalize",
+    "react portal"
   ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
+  "main": "dist/main/index.js",
+  "module": "dist/module/index.js",
+  "source": "src/index.tsx",
+  "types": "src/index.d.ts",
+  "exports": {
+    ".": {
+      "browser": "./dist/module/index.js",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/main/index.js",
+      "default": "./dist/main/index.js",
+      "source": "./src/index.tsx",
+      "types": "./src/index.d.ts"
+    },
+    "./server": {
+      "browser": "./server/dist/module/index.js",
+      "import": "./server/dist/esm/index.mjs",
+      "require": "./server/dist/main/index.js",
+      "default": "./server/dist/main/index.js",
+      "source": "./server/src/index.ts",
+      "types": "./server/src/index.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./": "./"
+  },
   "files": [
+    "/src",
     "/dist",
-    "/server"
+    "/server/src",
+    "/server/dist",
+    "/server/package.json"
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "npm run build:cjs && npm run build:es && npm run build:server && npm run build:types",
-    "build:cjs": "babel src -d dist/cjs -x .ts,.tsx --ignore \"**/*.test.ts\",\"**/test.ts\",\"**/*.test.tsx\",\"**/test.tsx\" --delete-dir-on-start",
-    "build:server": "babel server-src -d server -x .ts,.tsx --ignore \"**/*.test.ts\",\"**/test.ts\",\"**/*.test.tsx\",\"**/test.tsx\" --delete-dir-on-start",
-    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es -x .ts,.tsx --ignore \"**/*.test.ts\",\"**/test.ts\",\"**/*.test.tsx\",\"**/test.tsx\" --delete-dir-on-start",
-    "build:types": "tsc -p tsconfig.json -d --outDir dist/es --emitDeclarationOnly && mkdir -p dist/cjs && cp -R dist/es/**.d.ts dist/cjs && tsc -p tsconfig.server.json -d --outDir server --emitDeclarationOnly && rimraf dist/**/*.test.d.ts",
+    "build": "npm run build-esm && npm run build-main && npm run build-module && npm run build-types",
+    "build-esm": "npm run compile -- -d dist/esm --env-name esm --out-file-extension .mjs && npm run compile-server -- -d server/dist/esm --env-name esm --out-file-extension .mjs",
+    "build-main": "npm run compile -- -d dist/main --env-name main && npm run compile-server -- -d server/dist/main --env-name main",
+    "build-module": "npm run compile -- -d dist/module --env-name module && npm run compile-server -- -d server/dist/module --env-name module",
+    "build-types": "rimraf src/index.d.ts && rimraf server/src/index.d.ts && tsc -p tsconfig.json -d --emitDeclarationOnly",
     "check-types": "tsc --noEmit -p tsconfig.json",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,yml,json,babelrc,eslintrc,prettierrc}\"",
+    "compile": "babel src -x .ts,.tsx --ignore \"**/*.d.ts\",\"**/*.test.tsx\" --delete-dir-on-start",
+    "compile-server": "babel server/src -x .ts,.tsx --ignore \"**/*.d.ts\",\"**/*.test.tsx\" --delete-dir-on-start",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,yml,json,eslintrc,prettierrc}\"",
     "lint": "eslint . --ext .ts,.tsx",
     "prepublishOnly": "npm run lint && npm run test && npm run build && npm run format",
     "test": "jest",
@@ -37,7 +65,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run build:types"
+      "pre-commit": "npm run build-types && git add types && lint-staged"
     }
   },
   "lint-staged": {
@@ -45,7 +73,7 @@
       "eslint",
       "prettier --write"
     ],
-    "**/*.{md,yml,json,babelrc,eslintrc,prettierrc}": [
+    "**/*.{md,yml,json,eslintrc,prettierrc}": [
       "prettier --write"
     ]
   },
@@ -55,12 +83,14 @@
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",
     "@testing-library/react-hooks": "latest",
+    "@testing-library/user-event": "latest",
     "@types/jest": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
-    "cross-env": "latest",
+    "babel-plugin-annotate-pure-calls": "latest",
+    "babel-plugin-optimize-react": "latest",
     "eslint": "latest",
     "eslint-import-resolver-jest": "latest",
     "eslint-plugin-jest": "latest",
@@ -73,16 +103,16 @@
     "react": "latest",
     "react-dom": "latest",
     "react-test-renderer": "latest",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.2",
     "ts-jest": "latest",
     "typescript": "latest"
   },
   "dependencies": {
+    "@types/cheerio": "^0.22.18",
     "cheerio": "^1.0.0-rc.3"
   },
   "peerDependencies": {
-    "prop-types": ">=15.7.2",
     "react": ">=16.8",
-    "react-dom": ">=16"
+    "react-dom": ">=16.8"
   }
 }

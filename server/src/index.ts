@@ -1,6 +1,5 @@
 import {renderToStaticMarkup} from 'react-dom/server'
 import {load} from 'cheerio'
-// @ts-ignore
 import {PORTALS} from 'react-portalize'
 
 export function renderPortalsToString(html: string): string {

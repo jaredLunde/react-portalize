@@ -1,23 +1,17 @@
 {
-  "include": ["src"],
-  "exclude": [
-    "src/**/*.test.ts",
-    "src/**/test.ts",
-    "src/**/*.test.tsx",
-    "src/**/test.tsx"
-  ],
+  "include": ["src", "server/src"],
+  "exclude": ["src/**/*.test.tsx", "server/src/**/*.test.tsx"],
   "compilerOptions": {
     "target": "es5",
-    "lib": ["esnext", "dom", "dom.iterable"],
+    "lib": ["esnext", "dom"],
     "jsx": "react",
+    "strict": true,
     "moduleResolution": "node",
-    "strictNullChecks": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noFallthroughCasesInSwitch": true,
-    "noEmitOnError": true
+    "baseUrl": ".",
+    "paths": {
+      "react-portalize": ["./src"],
+      "react-portalize/server": ["./server"]
+    }
   }
 }

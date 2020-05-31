@@ -1,14 +1,42 @@
-import React, {useState, useEffect} from 'react'
-import ReactDOM from 'react-dom'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 
-/**
- <Portalize container='#portals'>
- <div>Inject me</div>
- </Portalize>
- */
-export const PORTALS: Record<string, React.ReactNode> = {}
-const getContainer = container =>
+export const PORTALS: Record<string, React.ReactElement> = {}
+const getContainer = (container: string) =>
   typeof document !== 'undefined' && document.querySelectorAll(container)
+
+const Portalize: React.FC<PortalizeProps> = ({
+  container = '#portals',
+  server = true,
+  providers,
+  children,
+}) => {
+  const [nodes, setNodes] = React.useState(getContainer(container))
+  React.useEffect(() => {
+    setNodes(getContainer(container))
+  }, [container])
+
+  if (nodes === false) {
+    // this branch only renders on the server
+    if (server) {
+      if (providers !== void 0 && providers.length > 0) {
+        children = providers.reduceRight(
+          (children, {provider, value}) =>
+            React.createElement(provider, {value}, children),
+          children
+        )
+      }
+      if (children) PORTALS[container] = children
+    }
+  } else if (nodes.length > 0) {
+    const portals: React.ReactPortal[] = []
+    for (let i = 0; i < nodes.length; i++)
+      portals.push(ReactDOM.createPortal(children, nodes[i]))
+    return <React.Fragment>{portals}</React.Fragment>
+  }
+
+  return null
+}
 
 export interface PortalizeProvider {
   provider: React.Provider<any>
@@ -19,41 +47,7 @@ export interface PortalizeProps {
   container?: string
   providers?: PortalizeProvider[]
   server?: boolean
-}
-
-const Portalize: React.FC<PortalizeProps> = ({
-  container = '#portals',
-  server = true,
-  providers,
-  children,
-}) => {
-  const [nodes, setNodes] = useState(getContainer(container))
-  useEffect(() => {
-    setNodes(getContainer(container))
-  }, [container])
-
-  if (nodes === false) {
-    // this branch only renders on the server
-    if (server === false) return null
-
-    if (providers !== void 0 && providers.length > 0) {
-      children = providers.reduceRight(
-        (children, {provider, value}) =>
-          React.createElement(provider, {children, value}),
-        children
-      )
-    }
-
-    PORTALS[container] = children
-    return null
-  } else if (nodes.length === 0) {
-    return null
-  } else {
-    const portals: React.ReactPortal[] = []
-    for (let i = 0; i < nodes.length; i++)
-      portals.push(ReactDOM.createPortal(children, nodes[i]))
-    return <>{portals}</>
-  }
+  children: React.ReactElement | null
 }
 
 export default Portalize

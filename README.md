@@ -88,7 +88,7 @@ import Portalize from 'react-portalize'
     right, so `[a, b, c]` renders as `<a><b><c/></b></a>`.
     ```js
     <Portalize providers={[{provider: YourProvider, value: YourProviderValue}]}>
-      <YourConsumer>{value => JSON.stringify(value)}</YourConsumer>
+      <YourConsumer>{(value) => JSON.stringify(value)}</YourConsumer>
     </Portalize>
     ```
 

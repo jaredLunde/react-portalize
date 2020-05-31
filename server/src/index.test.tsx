@@ -3,7 +3,8 @@
  */
 import * as React from 'react'
 import {renderToStaticMarkup, renderToString} from 'react-dom/server'
-import Portalize, {PORTALS} from './index'
+import Portalize, {PORTALS} from '../../src/index'
+import {renderPortalsToString} from './index'
 
 const Context = React.createContext({foo: null})
 
@@ -59,6 +60,21 @@ describe('<Portalize>', () => {
     )
 
     expect(Object.values(PORTALS).length).toBe(0)
+    expect(result).toMatchSnapshot()
+  })
+
+  it('should not render portals to a string', () => {
+    const result = renderPortalsToString(
+      renderToString(
+        <body>
+          <div id="portals" />
+          <Portalize container=".portals">
+            <div>Hello world</div>
+          </Portalize>
+        </body>
+      )
+    )
+
     expect(result).toMatchSnapshot()
   })
 })

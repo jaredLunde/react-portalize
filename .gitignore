@@ -1,4 +1,6 @@
 node_modules
 dist
 coverage
-server
+src/index.d.ts
+server/src/**/*.d.ts
+*.log
