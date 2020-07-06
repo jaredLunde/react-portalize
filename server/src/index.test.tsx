@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /**
  * @jest-environment node
  */
@@ -17,8 +18,8 @@ describe('<Portalize>', () => {
   it('should store portals in the PORTALS constant according to their container', () => {
     const result = renderToString(
       <body>
-        <div id="portals" />
-        <Portalize container=".portals">
+        <div id='portals' />
+        <Portalize container='.portals'>
           <div>Hello world</div>
         </Portalize>
       </body>
@@ -33,9 +34,9 @@ describe('<Portalize>', () => {
   it('should work with context', () => {
     const result = renderToString(
       <body>
-        <div id="portals" />
+        <div id='portals' />
         <Portalize
-          container=".portals"
+          container='.portals'
           providers={[{provider: Context.Provider, value: {foo: 'bar'}}]}
         >
           <Component />
@@ -52,8 +53,8 @@ describe('<Portalize>', () => {
   it('should not render on server if server={false}', () => {
     const result = renderToString(
       <body>
-        <div id="portals" />
-        <Portalize container=".portals" server={false}>
+        <div id='portals' />
+        <Portalize container='.portals' server={false}>
           <div>Hello world</div>
         </Portalize>
       </body>
@@ -67,8 +68,8 @@ describe('<Portalize>', () => {
     const result = renderPortalsToString(
       renderToString(
         <body>
-          <div id="portals" />
-          <Portalize container=".portals">
+          <div id='portals' />
+          <Portalize container='.portals'>
             <div>Hello world</div>
           </Portalize>
         </body>
