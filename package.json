@@ -57,7 +57,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lundle check-types && lint-staged"
+      "pre-commit": "lundle check-types && lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
